@@ -1,0 +1,31 @@
+services:
+  laravel_app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    networks:
+      - network_bi
+    volumes:
+      - ./laravel:/opt/html
+      - ./logs/php-fpm:/opt/logs/php-fpm
+    restart: unless-stopped
+    working_dir: /opt/html
+
+  nginx_app:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - ./laravel:/opt/html
+      - ./logs/nginx:/opt/logs/nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    networks:
+      - network_bi
+
+networks:
+ network_bi:
+    ipam:
+      config:
+        - subnet: 172.64.5.0/24
