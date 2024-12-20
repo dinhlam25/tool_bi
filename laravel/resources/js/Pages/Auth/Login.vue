@@ -19,9 +19,10 @@
                                     <span class="px-3 bg-gray-200 text-gray-700">
                                         <i class="fas fa-user"></i>
                                     </span>
-                                    <input id="siireuser_id_besend" name="siireuser_id_besend" type="text"
-                                        class="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring focus:border-none"
-                                        placeholder="ログインID" />
+                                    <input v-model="siireuser_id_besend" id="siireuser_id_besend"
+                                        name="siireuser_id_besend" type="text"
+                                        class="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring-0 focus:border-transparent"
+                                        placeholder="ログインID" @keypress.enter="submitForm" />
                                 </div>
                             </div>
                             <div class="my-6">
@@ -29,14 +30,16 @@
                                     <span class="px-3 bg-gray-200 text-gray-700">
                                         <i class="fas fa-key"></i>
                                     </span>
-                                    <input id="siireuser_passwd_bemd5" name="siireuser_passwd_bemd5" type="password"
-                                        class="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring focus:border-none"
-                                        placeholder="パスワード" />
+                                    <input v-model="siireuser_passwd_bemd5" id="siireuser_passwd_bemd5"
+                                        name="siireuser_passwd_bemd5" type="password"
+                                        class="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring-0 focus:border-transparent"
+                                        placeholder="パスワード" @keypress.enter="submitForm" />
                                 </div>
                             </div>
-                            <form method="POST" action="/login" class="mt-10">
-                                <input type="hidden" id="siireuser_id" name="siireuser_id" />
-                                <input type="hidden" id="siireuser_passwd" name="siireuser_passwd" />
+                            <form method="POST" action="/login" class="mt-10" @submit.prevent="submitForm">
+                                <input type="hidden" id="siireuser_id" name="siireuser_id" :value="siireuser_id" />
+                                <input type="hidden" id="siireuser_passwd" name="siireuser_passwd"
+                                    :value="siireuser_passwd" />
                                 <div class="flex justify-center">
                                     <button id="login-btn" type="submit"
                                         class="px-6 py-2 bg-gray-200 text-gray-900 font-bold rounded-lg shadow hover:bg-gray-300 focus:outline-none">
@@ -67,12 +70,33 @@
 
 <script setup lang="ts">
 import AuthLayout from '@/Layouts/AuthLayout.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { Md5 } from 'ts-md5'
 
 const errors = ref({
     siireuser_id: '',
     siireuser_passwd: '',
 });
+
+const siireuser_id_besend = ref('');
+const siireuser_passwd_bemd5 = ref('');
+const siireuser_id = ref('');
+const siireuser_passwd = ref('');
+
+watch(siireuser_id_besend, (newValue) => {
+    siireuser_id.value = newValue;
+});
+
+watch(siireuser_passwd_bemd5, (newValue) => {
+    siireuser_passwd.value = Md5.hashStr(newValue);
+});
+
+const submitForm = () => {
+    const form = document.querySelector('form');
+    if (form) {
+        form.submit();
+    }
+};
 
 const portalBaseUrl = 'https://wbc.webike.net/portal';
 const portalLogoSrc = `${portalBaseUrl}/wp-content/uploads/2022/03/WBC_logo.png`;
