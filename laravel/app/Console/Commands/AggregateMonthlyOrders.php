@@ -42,16 +42,13 @@ class AggregateMonthlyOrders extends Command
         }
         $yesterday = now()->subDays(1);
         $aggregateMonth = $yesterday->copy();
-        $startDate = $yesterday->copy();
         // Aggregate Child Bunrui data
-        for ($i = 0; $i <= $subMonths; $i++) {
-            $aggregateMonth = $aggregateMonth->subMonths(1);
-            $startDate = $aggregateMonth->copy()->startOfMonth();
-            $endDate = $aggregateMonth->copy()->endOfMonth();
-            $endDate = min($endDate, $yesterday);
-
-            $strStart = $startDate->format('Y-m-d');
+        for ($i = 0; $i < $subMonths; $i++) {
+            $aggregateMonth = $yesterday->copy()->subMonths($i);
+            $strStart = $aggregateMonth->startOfMonth()->format('Y-m-d');
+            $endDate = min($aggregateMonth->endOfMonth(), $yesterday);
             $strEnd = $endDate->format('Y-m-d');
+
             Log::debug("Aggregate child bunrui monthly orders data: $strStart - $strEnd");
             $this->aggregateOrdersChildBunrui($strStart, $strEnd);
             Log::debug("Aggregate child bunrui monthly sales data: $strStart - $strEnd");
@@ -63,7 +60,7 @@ class AggregateMonthlyOrders extends Command
             Log::debug("Aggregate Webike monthly sales data: $strStart - $strEnd");
             $this->aggregateSalesWebike($strStart, $strEnd);
         }
-        $startMonth = $startDate->format('Ym');
+        $startMonth = $aggregateMonth->format('Ym');
         $endMonth = $yesterday->format('Ym');
 
         // Aggregate oya bunrui data
