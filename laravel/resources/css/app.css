@@ -1,3 +1,361 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1.pdm-h1 {
+    color: #444242;
+    background-color: #f3f0f0;
+    border-top: 1px solid #b4b2b2;
+    border-right: 1px solid #b4b2b2;
+    border-bottom: 1px solid #b4b2b2;
+    border-left: 10px solid #e71f1c;
+    border-radius: 0!important;
+    position: relative;
+    padding: 0.25em 1em;
+    font-size: 1.6em;
+    line-height: 1.5;
+}
+
+h1.pdm-h1-left {
+    color: #444242;
+    background-color: #f3f0f0;
+    border-top: 1px solid #b4b2b2;
+    border-right: none;
+    border-bottom: 1px solid #b4b2b2;
+    border-left: 10px solid #e71f1c;
+    border-radius: 0!important;
+    position: relative;
+    padding: 0.25em 1em;
+    font-size: 1.6em;
+    line-height: 1.5;
+    width: 100%;
+}
+h1.pdm-h1-right {
+    color: #444242;
+    background-color: #f3f0f0;
+    border-top: 1px solid #b4b2b2;
+    border-right: 1px solid #b4b2b2;
+    border-bottom: 1px solid #b4b2b2;
+    border-left: none;
+    border-radius: 0!important;
+    position: relative;
+    padding: 0.25em 1em;
+    font-size: 1.6em;
+    line-height: 1.5;
+}
+
+h2.pdm-h2 {
+    color: #444242;
+    background-color: #f3f0f0;
+    border-top: 1px solid #b4b2b2;
+    border-right: 1px solid #b4b2b2;
+    border-bottom: 1px solid #b4b2b2;
+    border-left: 10px solid #e71f1c;
+    border-radius: 0!important;
+    position: relative;
+    padding: 0.25em 1em;
+    font-size: 1.3em;
+    line-height: 1.5;
+}
+
+label.pdm-input-lavel {
+    color: #444242;
+    border-left: 23px solid #e71f1c;
+    border-radius: 0!important;
+    position: relative;
+    padding: 0em 1em;
+    font-size: 1.3em;
+    line-height: 1.5;
+}
+
+table.image-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td.image-td {
+    width: 10%; /* セルの幅 */
+    padding-bottom: 10%; /* セルの高さ */
+    border: 1px solid #7a7474;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #dbdbdb; /* 背景色 */
+}
+
+span.image-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #7a7474; /* 文字色 */
+}
+
+.pdm-dropzone {
+    border: 2px dashed #7a7474;  /* ボーダー */
+    background-color: #f3f0f0; /* 背景色 */
+    padding: 20px;
+    text-align: center;
+    color: #7a7474; /* 文字色 */
+}
+
+.pdm-dropzone-label {
+    cursor: pointer;
+}
+
+.pdm-dropzone-input {
+    display: none;
+}
+
+.center-image-text {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding:0;
+    margin:0;
+    color: #565656; /* 文字色 */
+}
+
+.left-image-text {
+    position: absolute;
+    top:50%;
+    left:3%;
+    transform: translate(-50%,-50%);
+    padding:0;
+    margin:0;
+    color: #969292; /* 文字色 */
+}
+
+.right-image-text {
+    position: absolute;
+    top:50%;
+    left:97%;
+    transform: translate(-50%,-50%);
+    padding:0;
+    margin:0;
+    color: #969292; /* 文字色 */
+}
+
+/* 適合車種フォーム用 */
+.padding-narw-lr {
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+/* カテゴリ選択用 */
+.bunrui-hover:hover {
+    color: #2474ec;
+    background-color: #c2bbbb;
+}
+
+.bunrui-active {
+    font-weight: bold;
+    color: #2474ec;
+    background-color: #c2bbbb;
+}
+
+/* YouTubeサイズ調整用 */
+.youtube_wrap{
+    padding-top: 56.25%;
+    width: 100%;
+    position: relative;
+}
+
+.youtube_wrap iframe{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.matter-modal-overlay {
+    /* 要素を重ねた時の順番 */
+    z-index:100;
+  
+    /* 画面全体を覆う設定 */
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+  
+    /* 画面の中央に要素を表示させる設定 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matter-modal-content {
+    z-index: 202;
+    width: 50%;
+    padding: 1em;
+    background: #fff;
+    max-height: 800px;
+}
+
+.preview-modal-overlay {
+    /* 要素を重ねた時の順番 */
+    z-index:201;
+  
+    /* 画面全体を覆う設定 */
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+  
+    /* 画面の中央に要素を表示させる設定 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-modal-content {
+    z-index: 101;
+    width: 80%;
+    padding: 1em;
+    background: #fff;
+}
+
+.img-modal-overlay {
+    /* 要素を重ねた時の順番 */
+    z-index:201;
+  
+    /* 画面全体を覆う設定 */
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+  
+    /* 画面の中央に要素を表示させる設定 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-modal-content {
+    z-index: 101;
+    width: 1024px;
+    padding: 1em;
+}
+
+.pdm-bg-black{
+    background-color: #000000;
+}
+
+.pdm-bg-white{
+    background-color: #ffffff;
+}
+
+.pdm-bg-gray{
+    background-color: #e0e0e0;
+}
+.pdm-bg-blue{
+    background-color: #0d47a0;
+}
+
+.pdm-bg-lightblue{
+    background-color: #bbdefb !important;
+}
+
+.pdm-bg-lightblue textarea{
+    background-color: #bbdefb !important;
+}
+
+.dashbord-border {
+  border-top: 3px solid #e3342f;
+}
+
+.dashbord-border-disable {
+  border-top: 3px solid;
+}
+
+.dashbord-border-card {
+  border-top: 3px solid #00000020;
+}
+
+.dashbord-card {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+}
+
+.dashbord-card-unit {
+  font-size: 1rem;
+  color: black;
+}
+
+.btn-submit-registration {
+    width: 240px;
+    height: 50px;
+    border: 4px solid #ccc;
+    background: #fff;
+}
+
+.btn-size-edit {
+    min-width: 56px;
+    min-height: 48px;
+    font-size: small;
+}
+.tab-header {
+    min-width: 64px;
+    font-size: large;
+}
+
+.fs-sm{
+    font-size: small;
+}
+.fs-md{
+    font-size: medium;
+}
+.fs-lg{
+    font-size: large;
+}
+
+.color-red {
+    color: #e3342f;
+}
+
+.color-gray {
+    color: #e0e0e0;
+}
+
+.vbt-table-wrapper {
+    min-width: 1336px;
+    height: 810px;
+}
+
+.vue-form-wizard .wizard-tab-content {
+    min-height: 100px;
+    padding: 10px 20px 10px;
+}
+
+.bunrui-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.displayBunruikaisous {
+    flex: 0 1 auto;
+    min-width: 70px;
+}
+
+.bunrui-image {
+    flex: 0 0 auto;
+}
+
+.bunrui-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+ul.pagination {
+    margin-bottom: -6px !important;
+    background-color: #fff;
+}

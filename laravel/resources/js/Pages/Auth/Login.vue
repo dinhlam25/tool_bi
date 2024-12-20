@@ -1,92 +1,86 @@
+<template>
+    <AuthLayout>
+        <div class="container mx-auto mt-10">
+            <div class="flex justify-center mt-10">
+                <div class="w-full max-w-lg mt-20">
+                    <div class="bg-white shadow-lg rounded-lg">
+                        <div class="p-6 bg-black">
+                            <div class="text-center text-3xl font-bold text-white my-6">
+                                BI Login
+                            </div>
+                            <div v-if="errors.siireuser_id" class="text-red-500 text-center font-bold">
+                                ※ {{ errors.siireuser_id }}
+                            </div>
+                            <div v-if="errors.siireuser_passwd" class="text-red-500 text-center font-bold">
+                                ※ {{ errors.siireuser_passwd }}
+                            </div>
+                            <div class="my-6">
+                                <div class="flex items-center bg-gray-100 rounded-lg overflow-hidden">
+                                    <span class="px-3 bg-gray-200 text-gray-700">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <input id="siireuser_id_besend" name="siireuser_id_besend" type="text"
+                                        class="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring focus:border-none"
+                                        placeholder="ログインID" />
+                                </div>
+                            </div>
+                            <div class="my-6">
+                                <div class="flex items-center bg-gray-100 rounded-lg overflow-hidden">
+                                    <span class="px-3 bg-gray-200 text-gray-700">
+                                        <i class="fas fa-key"></i>
+                                    </span>
+                                    <input id="siireuser_passwd_bemd5" name="siireuser_passwd_bemd5" type="password"
+                                        class="w-full px-4 py-2 text-gray-700 focus:outline-none focus:ring focus:border-none"
+                                        placeholder="パスワード" />
+                                </div>
+                            </div>
+                            <form method="POST" action="/login" class="mt-10">
+                                <input type="hidden" id="siireuser_id" name="siireuser_id" />
+                                <input type="hidden" id="siireuser_passwd" name="siireuser_passwd" />
+                                <div class="flex justify-center">
+                                    <button id="login-btn" type="submit"
+                                        class="px-6 py-2 bg-gray-200 text-gray-900 font-bold rounded-lg shadow hover:bg-gray-300 focus:outline-none">
+                                        ログイン
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center mt-8">
+                <div class="bg-white p-4 rounded-lg text-center shadow-md w-72">
+                    <a :href="portalUrl" target="_blank" class="text-gray-800 text-sm hover:underline">
+                        <img :src="portalLogoSrc" alt="WBC logo" class="mx-auto mb-2" width="200" height="17" />
+                        <div>
+                            ポータルサイトは
+                            <span class="ml-1 bg-blue-600 text-white rounded px-2">
+                                こちら
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </AuthLayout>
+</template>
+
 <script setup lang="ts">
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import AuthLayout from '@/Layouts/AuthLayout.vue';
+import { computed, ref } from 'vue';
 
-defineProps<{
-    canResetPassword?: boolean;
-    status?: string;
-}>();
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
+const errors = ref({
+    siireuser_id: '',
+    siireuser_passwd: '',
 });
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => {
-            form.reset('password');
-        },
+const portalBaseUrl = 'https://wbc.webike.net/portal';
+const portalLogoSrc = `${portalBaseUrl}/wp-content/uploads/2022/03/WBC_logo.png`;
+const portalUrl = computed(() => {
+    const params = new URLSearchParams({
+        'password_protected_pwd': 'we819wbc',
+        'redirect_to': `${portalBaseUrl}/?pdm=1`,
     });
-};
+    return `${portalBaseUrl}/?${params.toString()}`;
+});
 </script>
-
-<template>
-    <GuestLayout>
-        <Head title="Log in" />
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
-</template>

@@ -5,10 +5,13 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
     plugins: [
         laravel({
-            input: 'resources/js/app.ts',
+            input: [
+                'resources/js/app.ts',
+                'resources/css/app.css',
+            ],
             refresh: true,
         }),
-        vue({
+        vue({                          
             template: {
                 transformAssetUrls: {
                     base: null,
@@ -17,4 +20,12 @@ export default defineConfig({
             },
         }),
     ],
+    // server: {
+    //     host: '0.0.0.0',
+    //     port: 5173,
+    //     hmr: {
+    //         host: 'localhost',
+    //         port: 5173,
+    //     },
+    // },
 });
