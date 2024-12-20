@@ -34,7 +34,7 @@ class AggregateMonthlyOrders extends Command
         Log::info("BEGIN - Aggregate Monthly Orders/Sales");
         $this->info("BEGIN - Aggregate Monthly Orders/Sales");
 
-        $subMonths = 2;
+        $subMonths = 2; // default to aggregate the last 2 months
 
         $subMonthsParam = $this->argument('pastMonths');
         if (isset($subMonthsParam) && is_numeric($subMonthsParam) && $subMonthsParam > 0) {
@@ -44,8 +44,8 @@ class AggregateMonthlyOrders extends Command
         $aggregateMonth = $yesterday->copy();
         $startDate = $yesterday->copy();
         // Aggregate Child Bunrui data
-        for ($i = 0; $i < $subMonths; $i++) {
-            $aggregateMonth = $aggregateMonth->subMonths($i);
+        for ($i = 0; $i <= $subMonths; $i++) {
+            $aggregateMonth = $aggregateMonth->subMonths(1);
             $startDate = $aggregateMonth->copy()->startOfMonth();
             $endDate = $aggregateMonth->copy()->endOfMonth();
             $endDate = min($endDate, $yesterday);
